@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mau ga jadi pacar aku</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{background:#FFF6F8;height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.box{text-align:center;width:100%;max-width:520px;padding:20px}
+h1{color:#E9447A;font-size:29px;font-weight:900}
+.btns{margin-top:26px;display:flex;justify-content:center;gap:22px;align-items:center;height:160px;position:relative}
+button{border:none;border-radius:18px;padding:15px 34px;font-weight:900;font-size:19px;cursor:pointer;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
+#yes{background:#2ECC71;color:white;box-shadow:0 7px 0 #219150;z-index:50}
+#no{background:#FF4D4D;color:white;box-shadow:0 7px 0 #a82a2a;z-index:40}
+.single{width:170px;margin:18px auto;animation:float 1.6s infinite alternate ease-in-out}
+@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-10px)}}
+#final{display:none}
+/* ANIMASI PELUKAN REAL */
+.hug-scene{position:relative;width:340px;max-width:92vw;height:300px;margin:20px auto}
+.hug-img{position:absolute;width:100%;left:0;top:0;animation:hugMove 0.7s infinite alternate ease-in-out;transform-origin:center bottom}
+@keyframes hugMove{
+0%{transform:scale(1) translateY(0) rotate(-1.5deg)}
+25%{transform:scale(1.05,0.95) translateY(-4px) rotate(1deg)}
+50%{transform:scale(0.96,1.06) translateY(-8px) rotate(-1deg)}
+75%{transform:scale(1.04,0.97) translateY(-3px) rotate(1.5deg)}
+100%{transform:scale(1) translateY(0) rotate(-1deg)}
+}
+.heart{width:28px;height:28px;background:#FF2D68;transform:rotate(-45deg);margin:18px auto;position:relative;animation:pop .8s infinite}
+.heart:before,.heart:after{content:'';width:28px;height:28px;background:#FF2D68;border-radius:50%;position:absolute}
+.heart:before{top:-14px;left:0}.heart:after{left:14px;top:0}
+@keyframes pop{0%,100%{transform:rotate(-45deg) scale(1)}50%{transform:rotate(-45deg) scale(1.35)}}
+</style>
+</head>
+<body>
+<div class="box" id="main">
+<h1>mau ga kamu jadi pacar aku</h1>
+<div class="btns"><button id="yes">Yes</button><button id="no">No</button></div>
+<div class="single"><svg viewBox="0 0 200 170"><rect x="55" y="90" width="90" height="55" rx="28" fill="#7AC8FF"/><circle cx="100" cy="65" r="52" fill="#7AC8FF"/><circle cx="77" cy="64" r="8" fill="black"/><circle cx="123" cy="64" r="8" fill="black"/></svg></div>
+<p id="hint" style="color:#bbb;font-size:13px">no nya kabur loh</p>
+</div>
+
+<div class="box" id="final">
+<h1>Knew you would say yes</h1>
+<div class="hug-scene">
+<img src="hug.png" class="hug-img" alt="hug animasi">
+</div>
+<p style="color:#E9447A;font-weight:800;font-size:22px">makasih ya udah mau jadi pacar aku</p>
+<div class="heart"></div>
+</div>
+
+<script>
+const noBtn=document.getElementById('no');
+const yesBtn=document.getElementById('yes');
+let yesScale=1,noScale=1,c=0;
+function kabur(){
+ c++; noScale=Math.max(0.12,1-c*0.18); yesScale+=0.6;
+ noBtn.style.position='fixed';
+ noBtn.style.left=Math.random()*(window.innerWidth-100)+'px';
+ noBtn.style.top=Math.random()*(window.innerHeight-100)+'px';
+ noBtn.style.transform='scale('+noScale+')';
+ noBtn.style.opacity=noScale;
+ yesBtn.style.transform='scale('+yesScale+')';
+ if(yesScale>2.3){
+   yesBtn.style.position='fixed'; yesBtn.style.left='50%'; yesBtn.style.top='50%';
+   yesBtn.style.transform='translate(-50%,-50%) scale('+yesScale+')';
+   yesBtn.style.fontSize=(18+yesScale*5)+'px';
+ }
+ if(noScale<=0.2) noBtn.style.display='none';
+}
+noBtn.addEventListener('mouseenter',kabur);
+noBtn.addEventListener('touchstart',e=>{e.preventDefault();kabur()});
+noBtn.addEventListener('click',kabur);
+yesBtn.addEventListener('click',()=>{
+ document.getElementById('main').style.display='none';
+ document.getElementById('final').style.display='block';
+ document.body.style.background='#FFE8F0';
+});
+</script>
+</body>
+</html>
